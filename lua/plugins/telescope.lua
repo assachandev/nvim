@@ -4,10 +4,6 @@ return {
     cmd = "Telescope",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            build = "make",
-        },
     },
     keys = {
         { "<leader>ff", "<cmd>Telescope find_files<cr>",  desc = "Find files" },
@@ -32,13 +28,5 @@ return {
                 treesitter = false,
             },
         },
-        extensions = {
-            fzf = {},
-        },
     },
-    config = function(_, opts)
-        local telescope = require("telescope")
-        telescope.setup(opts)
-        telescope.load_extension("fzf")
-    end,
 }

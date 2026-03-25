@@ -10,8 +10,6 @@ return {
 				cmp = true,
 				gitsigns = true,
 				treesitter = true,
-				notify = true,
-				noice = true,
 				telescope = { enabled = true },
 				native_lsp = {
 					enabled = true,
@@ -64,19 +62,6 @@ return {
 				end,
 			})
 		end,
-	},
-
-	-- Smooth animations for cursor, scroll, and window opens
-	{
-		"echasnovski/mini.animate",
-		event = "VeryLazy",
-		opts = {
-			cursor = { enable = false },
-			scroll = { enable = true },
-			resize = { enable = true },
-			open = { enable = true },
-			close = { enable = true },
-		},
 	},
 
 }
