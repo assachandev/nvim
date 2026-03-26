@@ -111,7 +111,7 @@
 mv ~/.config/nvim ~/.config/nvim.bak
 
 # Clone
-git clone https://github.com/<your-username>/nvim ~/.config/nvim
+git clone https://github.com/AssachanDev/nvim ~/.config/nvim
 
 # Launch — lazy.nvim installs everything on first start
 nvim
