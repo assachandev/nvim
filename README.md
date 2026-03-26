@@ -145,7 +145,7 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
 
 # 6. Clone config
 mv ~/.config/nvim ~/.config/nvim.bak 2>/dev/null || true
-git clone -b server https://github.com/<your-username>/nvim ~/.config/nvim
+git clone -b server https://github.com/AssachanDev/nvim ~/.config/nvim
 
 # 7. Launch — lazy.nvim + Mason install the rest on first start
 nvim
