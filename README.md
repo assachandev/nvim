@@ -3,7 +3,7 @@
 > A lightweight Neovim setup optimized for SSH / remote server use.
 > Fast startup · no build dependencies · no animations · core editing features only.
 
-![Neovim](https://img.shields.io/badge/Neovim-0.10%2B-57A143?style=flat-square&logo=neovim&logoColor=white)
+![Neovim](https://img.shields.io/badge/Neovim-0.11%2B-57A143?style=flat-square&logo=neovim&logoColor=white)
 ![Lua](https://img.shields.io/badge/Lua-5.1-2C2D72?style=flat-square&logo=lua&logoColor=white)
 ![Branch](https://img.shields.io/badge/branch-server-orange?style=flat-square)
 
@@ -45,12 +45,12 @@
 
 ## LSP & Language Support
 
-| Language | Server | Formatter |
-|---|---|---|
-| Python | `pyright` | `black` |
-| Lua | `lua_ls` | `stylua` |
-| Bash | `bashls` | `shfmt` |
-| C / C++ | `clangd` | `clang-format` |
+| Language | Server | Formatter | Install method |
+|---|---|---|---|
+| Python | `pyright` (Mason) | `black` | `pip3 install black --break-system-packages` |
+| Lua | `lua_ls` (Mason) | `stylua` | Mason |
+| Bash | `bashls` (Mason) | `shfmt` | Mason |
+| C / C++ | `clangd` (Mason) | `clang-format` | `sudo apt install clang-format` |
 
 ---
 
@@ -117,22 +117,41 @@
 
 ## Installation on Server
 
-**Requirements:** Neovim 0.10+, Git, `npm` or `pip` (for LSP servers via Mason)
+**Requirements:** Neovim **0.11+**, Git, `npm`, `python3-pip`
+
+> mason-lspconfig requires Neovim 0.11+. The `apt` package on Ubuntu is usually too old — install via snap instead.
 
 > No Nerd Font required — Telescope and Lualine work fine with plain text symbols too.
 
 ```bash
-# Backup existing config
-mv ~/.config/nvim ~/.config/nvim.bak
+# 1. Install Neovim 0.11+ (Ubuntu apt is too old)
+sudo snap install nvim --classic
 
-# Clone — use the server branch
+# 2. Install runtime dependencies for Mason
+sudo apt install npm python3-pip -y
+
+# 3. Install formatters that Mason cannot install on Ubuntu Server
+pip3 install black --break-system-packages          # Python formatter
+sudo apt install clang-format -y                    # C/C++ formatter
+
+# 4. Install stylua binary (Mason handles this, but if it fails do it manually)
+curl -L https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64.zip \
+  -o /tmp/stylua.zip
+unzip /tmp/stylua.zip -d ~/.local/bin/
+chmod +x ~/.local/bin/stylua
+
+# 5. Make sure ~/.local/bin is in PATH
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+
+# 6. Clone config
+mv ~/.config/nvim ~/.config/nvim.bak 2>/dev/null || true
 git clone -b server https://github.com/<your-username>/nvim ~/.config/nvim
 
-# Launch — lazy.nvim installs everything on first start
+# 7. Launch — lazy.nvim + Mason install the rest on first start
 nvim
 ```
 
-Mason will auto-install all LSP servers and formatters on first launch.
+Mason will auto-install LSP servers (`pyright`, `lua_ls`, `bashls`, `clangd`) and `stylua`/`shfmt` on first launch.
 
 ---
 

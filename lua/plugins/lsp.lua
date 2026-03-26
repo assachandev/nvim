@@ -15,7 +15,6 @@ return {
                 "bashls",    -- Bash
                 "clangd",    -- C / C++
             },
-            automatic_installation = true,
         },
     },
 
@@ -24,10 +23,10 @@ return {
         dependencies = { "williamboman/mason.nvim" },
         opts = {
             ensure_installed = {
-                "black",        -- Python formatter
-                "stylua",       -- Lua formatter
+                "stylua",       -- Lua formatter  (binary from GitHub releases)
                 "shfmt",        -- Bash formatter
-                "clang-format", -- C / C++ formatter
+                -- black        → installed via: pip3 install black --break-system-packages
+                -- clang-format → installed via: sudo apt install clang-format
             },
         },
     },
