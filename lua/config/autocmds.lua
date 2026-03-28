@@ -52,18 +52,6 @@ autocmd("CursorHold", {
     end,
 })
 
--- Open Telescope when nvim starts with no file
-autocmd("VimEnter", {
-    group = augroup("start_telescope", { clear = true }),
-    callback = function()
-        if vim.fn.argc() == 0 then
-            vim.schedule(function()
-                vim.cmd("Telescope find_files")
-            end)
-        end
-    end,
-})
-
 -- Close certain filetypes with just 'q'
 autocmd("FileType", {
     group = augroup("close_with_q", { clear = true }),
