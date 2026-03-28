@@ -1,20 +1,25 @@
+<div align="center">
+
 # Neovim — Server Config
 
-> A lightweight Neovim setup optimized for SSH / remote server use.
-> Fast startup · no build dependencies · no animations · core editing features only.
+**A lightweight Neovim setup optimized for SSH / remote server use.**
+
+Fast startup · no build dependencies · no animations · core editing features only.
 
 ![Neovim](https://img.shields.io/badge/Neovim-0.11%2B-57A143?style=flat-square&logo=neovim&logoColor=white)
 ![Lua](https://img.shields.io/badge/Lua-5.1-2C2D72?style=flat-square&logo=lua&logoColor=white)
 ![Branch](https://img.shields.io/badge/branch-server-orange?style=flat-square)
 
+</div>
+
 > **For the full local config** (with Noice, Bufferline, Yazi, animations, etc.) → see the [`main`](../../tree/main) branch.
 
 ---
 
-## What's different from `main`
+## 🆚 What's different from `main`
 
 | Feature | Local (`main`) | Server (this branch) |
-|---|---|---|
+|---------|:--------------:|:--------------------:|
 | Noice (fancy UI) | ✅ | ❌ removed |
 | Bufferline | ✅ | ❌ removed |
 | Yazi file manager | ✅ | ❌ removed |
@@ -25,10 +30,10 @@
 
 ---
 
-## Plugins
+## 🔌 Plugins
 
 | Plugin | Description |
-|---|---|
+|--------|-------------|
 | **[LSP](lua/plugins/lsp.lua)** | Mason + mason-lspconfig + nvim-lspconfig — Python, Lua, Bash, C/C++ |
 | **[Completion](lua/plugins/cmp.lua)** | nvim-cmp · LuaSnip · friendly-snippets |
 | **[Treesitter](lua/plugins/treesitter.lua)** | Parser-based syntax highlighting |
@@ -43,10 +48,10 @@
 
 ---
 
-## LSP & Language Support
+## 🌐 LSP & Language Support
 
 | Language | Server | Formatter | Install method |
-|---|---|---|---|
+|----------|--------|-----------|----------------|
 | Python | `pyright` (Mason) | `black` | `pip3 install black --break-system-packages` |
 | Lua | `lua_ls` (Mason) | `stylua` | Mason |
 | Bash | `bashls` (Mason) | `shfmt` | Mason |
@@ -54,24 +59,32 @@
 
 ---
 
-## Keymaps
+## ⌨️ Keymaps
 
 `<leader>` is set to `Space`. Press `<leader>` and wait for the **Which-Key** popup.
 
-### General
+<details>
+<summary><b>General</b></summary>
+
+<br>
 
 | Key | Action |
-|---|---|
+|-----|--------|
 | `<leader>w` | Save file |
 | `<leader>q` | Quit |
 | `<leader>Q` | Force quit all |
 | `jk` | Exit insert mode |
 | `<Esc>` | Clear search highlight |
 
-### Navigation
+</details>
+
+<details>
+<summary><b>Navigation</b></summary>
+
+<br>
 
 | Key | Action |
-|---|---|
+|-----|--------|
 | `<C-h/j/k/l>` | Move between windows / tmux panes |
 | `<C-↑/↓/←/→>` | Resize window |
 | `<S-h>` / `<S-l>` | Previous / Next buffer |
@@ -80,10 +93,15 @@
 | `<leader>sv` | Vertical split |
 | `<leader>sh` | Horizontal split |
 
-### Telescope
+</details>
+
+<details>
+<summary><b>Telescope</b></summary>
+
+<br>
 
 | Key | Action |
-|---|---|
+|-----|--------|
 | `<leader>ff` | Find files |
 | `<leader>fg` | Live grep |
 | `<leader>fb` | Find buffers |
@@ -91,10 +109,15 @@
 | `<leader>fh` | Help tags |
 | `<leader>fc` | Commands |
 
-### LSP
+</details>
+
+<details>
+<summary><b>LSP</b></summary>
+
+<br>
 
 | Key | Action |
-|---|---|
+|-----|--------|
 | `gd` | Go to definition |
 | `gD` | Go to declaration |
 | `gr` | References |
@@ -105,22 +128,31 @@
 | `<leader>d` | Line diagnostics |
 | `[d` / `]d` | Previous / Next diagnostic |
 
-### Commenting
+</details>
+
+<details>
+<summary><b>Commenting</b></summary>
+
+<br>
 
 | Key | Action |
-|---|---|
+|-----|--------|
 | `gcc` | Toggle line comment |
 | `gbc` | Toggle block comment |
 | `gc` / `gb` | Comment (visual / motion) |
 
+</details>
+
 ---
 
-## Installation on Server
+## 🚀 Installation on Server
 
 **Requirements:** Neovim **0.11+**, Git, `npm`, `python3-pip`
 
+> [!NOTE]
 > mason-lspconfig requires Neovim 0.11+. The `apt` package on Ubuntu is usually too old — install via snap instead.
 
+> [!NOTE]
 > No Nerd Font required — Telescope and Lualine work fine with plain text symbols too.
 
 ```bash
@@ -155,7 +187,7 @@ Mason will auto-install LSP servers (`pyright`, `lua_ls`, `bashls`, `clangd`) an
 
 ---
 
-## Structure
+## 📁 Structure
 
 ```
 ~/.config/nvim/
@@ -165,9 +197,9 @@ Mason will auto-install LSP servers (`pyright`, `lua_ls`, `bashls`, `clangd`) an
     │   ├── options.lua       # Vim options
     │   ├── keymaps.lua       # Global keymaps
     │   └── autocmds.lua      # Autocommands
-    ├── plugins/              # Loaded automatically by lazy.nvim
-    │   ├── lsp.lua
-    │   ├── cmp.lua
-    │   ├── ui.lua
-    │   └── ...
+    └── plugins/              # Loaded automatically by lazy.nvim
+        ├── lsp.lua
+        ├── cmp.lua
+        ├── ui.lua
+        └── ...
 ```
