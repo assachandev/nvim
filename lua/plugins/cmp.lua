@@ -31,9 +31,19 @@ return {
                 ["<C-u>"]   = cmp.mapping.scroll_docs(-4),
             }),
             sources = cmp.config.sources({
-                { name = "nvim_lsp" },
+                {
+                    name = "nvim_lsp",
+                    entry_filter = function(entry)
+                        return entry:get_completion_item().label:match("^%d") == nil
+                    end,
+                },
                 { name = "luasnip" },
-                { name = "buffer" },
+                {
+                    name = "buffer",
+                    entry_filter = function(entry)
+                        return entry:get_completion_item().label:match("^%d") == nil
+                    end,
+                },
                 { name = "path" },
             }),
             formatting = {
