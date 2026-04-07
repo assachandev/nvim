@@ -25,7 +25,7 @@ return {
         opts = {
             ensure_installed = {
                 "black",        -- Python formatter
-                "stylua",       -- Lua formatter
+                -- stylua installed system-wide via pacman
                 "shfmt",        -- Bash formatter
                 "clang-format", -- C / C++ formatter
             },
