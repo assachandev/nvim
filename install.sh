@@ -84,7 +84,7 @@ fi
 #  Clone config (server branch)
 # ─────────────────────────────────────────────────────────────
 info "Cloning nvim server config..."
-git clone -b server https://github.com/AssachanDev/nvim.git "$HOME/.config/nvim"
+git clone -b server https://github.com/assachandev/nvim.git "$HOME/.config/nvim"
 success "Config cloned."
 
 # ─────────────────────────────────────────────────────────────

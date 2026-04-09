@@ -45,6 +45,7 @@ Fast startup · no build dependencies · no animations · core editing features 
 | **[Editor](lua/plugins/pairs.lua)** | mini.pairs · [Comment.nvim](lua/plugins/comment.lua) · [nvim-surround](lua/plugins/surround.lua) · Flash · mini.cursorword |
 | **[Diagnostics](lua/plugins/trouble.lua)** | Trouble.nvim — diagnostics panel, location list, quickfix |
 | **[Tmux](lua/plugins/tmux-navigator.lua)** | vim-tmux-navigator — seamless navigation between Neovim splits and tmux panes |
+| **[Which-Key](lua/plugins/which-key.lua)** | Keymap helper popup |
 
 ---
 
@@ -147,6 +148,14 @@ Fast startup · no build dependencies · no animations · core editing features 
 
 ## 🚀 Installation on Server
 
+### Option 1 — One-liner
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/assachandev/nvim/server/install.sh)
+```
+
+### Option 2 — Manual
+
 **Requirements:** Neovim **0.11+**, Git, `npm`, `python3-pip`
 
 > [!NOTE]
@@ -177,7 +186,7 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
 
 # 6. Clone config
 mv ~/.config/nvim ~/.config/nvim.bak 2>/dev/null || true
-git clone -b server https://github.com/AssachanDev/nvim ~/.config/nvim
+git clone -b server https://github.com/assachandev/nvim ~/.config/nvim
 
 # 7. Launch — lazy.nvim + Mason install the rest on first start
 nvim
