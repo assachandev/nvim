@@ -52,7 +52,7 @@ jobs:
       - name: Patch install.sh to clone from local checkout
         run: |
           # Replace the git clone with a local copy so we don't need network access
-          sed -i 's|git clone https://github.com/AssachanDev/nvim.git.*|cp -r "$GITHUB_WORKSPACE" "$HOME/.config/nvim"|' install.sh
+          sed -i 's|git clone https://github.com/AssachanDev/nvim.git.*|mkdir -p "$HOME/.config" \&\& cp -r "$GITHUB_WORKSPACE" "$HOME/.config/nvim"|' install.sh
 
       - name: Run install script
         run: bash install.sh

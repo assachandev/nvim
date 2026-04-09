@@ -44,7 +44,6 @@ success "System dependencies installed."
 #  Backup existing nvim config
 # ─────────────────────────────────────────────────────────────
 if [[ -d "$HOME/.config/nvim" ]]; then
-    local backup
     backup="$HOME/.config/nvim.bak.$(date +%Y%m%d_%H%M%S)"
     warn "Existing nvim config found — backing up to $backup"
     mv "$HOME/.config/nvim" "$backup"
