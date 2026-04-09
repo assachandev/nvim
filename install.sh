@@ -66,6 +66,7 @@ fi
 #  Ensure ~/.local/bin is in PATH
 # ─────────────────────────────────────────────────────────────
 if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+    # shellcheck disable=SC2016
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc"
     warn "Added ~/.local/bin to PATH — run: source ~/.bashrc"
 fi
