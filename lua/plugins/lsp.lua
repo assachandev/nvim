@@ -10,9 +10,10 @@ return {
         dependencies = { "williamboman/mason.nvim" },
         opts = {
             ensure_installed = {
-                "pyright",   -- Python
-                "lua_ls",    -- Lua
-                "bashls",    -- Bash
+                "pyright",        -- Python
+                "lua_ls",         -- Lua
+                "bashls",         -- Bash
+                "rust_analyzer",  -- Rust
                 -- clangd installed system-wide via pacman
             },
             automatic_installation = true,
@@ -76,8 +77,11 @@ return {
             -- C / C++
             vim.lsp.config("clangd", {})
 
+            -- Rust
+            vim.lsp.config("rust_analyzer", {})
+
             -- Enable all configured servers
-            vim.lsp.enable({ "pyright", "lua_ls", "bashls", "clangd" })
+            vim.lsp.enable({ "pyright", "lua_ls", "bashls", "clangd", "rust_analyzer" })
         end,
     },
 }
