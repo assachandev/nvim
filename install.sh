@@ -53,7 +53,7 @@ fi
 #  Clone config
 # ─────────────────────────────────────────────────────────────
 info "Cloning nvim config..."
-git clone https://github.com/AssachanDev/nvim.git "$HOME/.config/nvim"
+git clone https://github.com/assachandev/nvim.git "$HOME/.config/nvim"
 success "Config cloned."
 
 # ─────────────────────────────────────────────────────────────

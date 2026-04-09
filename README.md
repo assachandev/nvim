@@ -137,7 +137,7 @@ Catppuccin Mocha · lazy-loaded · LSP-first · full feature set for local use.
 ### Option 1 — Arch Linux (recommended)
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/AssachanDev/nvim/main/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/assachandev/nvim/main/install.sh)
 ```
 
 Installs all system dependencies, clones the config, then launch `nvim` to let lazy.nvim do the rest.
@@ -161,7 +161,7 @@ Installs all system dependencies, clones the config, then launch `nvim` to let l
 sudo pacman -S neovim git base-devel make nodejs npm python clang fzf ttf-jetbrains-mono-nerd
 
 # Clone
-git clone https://github.com/AssachanDev/nvim ~/.config/nvim
+git clone https://github.com/assachandev/nvim ~/.config/nvim
 
 # Launch — lazy.nvim + Mason install everything on first start
 nvim
