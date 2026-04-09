@@ -1,0 +1,117 @@
+name: Test
+
+on:
+  push:
+    branches: [server]
+  pull_request:
+    branches: [server]
+
+jobs:
+  # ─────────────────────────────────────────────────────────────
+  #  Lint — shellcheck install.sh
+  # ─────────────────────────────────────────────────────────────
+  lint:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Run shellcheck
+        run: shellcheck install.sh
+
+  # ─────────────────────────────────────────────────────────────
+  #  Dry Run — verify install script runs and config is cloned
+  # ─────────────────────────────────────────────────────────────
+  dry-run:
+    name: Dry Run (Ubuntu)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Create mock commands
+        run: |
+          mkdir -p "$HOME/.local/bin"
+
+          # Mock snap — skip neovim install
+          printf '#!/bin/bash\necho "[MOCK] snap $*"\n' > "$HOME/.local/bin/snap"
+          chmod +x "$HOME/.local/bin/snap"
+
+          # Mock apt
+          printf '#!/bin/bash\necho "[MOCK] apt $*"\n' > "$HOME/.local/bin/apt"
+          chmod +x "$HOME/.local/bin/apt"
+
+          # Mock sudo — run commands directly
+          printf '#!/bin/bash\n"$@"\n' > "$HOME/.local/bin/sudo"
+          chmod +x "$HOME/.local/bin/sudo"
+
+          # Mock pip3
+          printf '#!/bin/bash\necho "[MOCK] pip3 $*"\n' > "$HOME/.local/bin/pip3"
+          chmod +x "$HOME/.local/bin/pip3"
+
+          # Mock curl — outputs empty zip placeholder
+          printf '#!/bin/bash\necho "[MOCK] curl $*"\n' > "$HOME/.local/bin/curl"
+          chmod +x "$HOME/.local/bin/curl"
+
+          # Mock unzip
+          printf '#!/bin/bash\necho "[MOCK] unzip $*"\n' > "$HOME/.local/bin/unzip"
+          chmod +x "$HOME/.local/bin/unzip"
+
+          # Mock stylua as already installed — skips download
+          printf '#!/bin/bash\necho "[MOCK] stylua $*"\n' > "$HOME/.local/bin/stylua"
+          chmod +x "$HOME/.local/bin/stylua"
+
+          # Mock nvim as already installed — skips snap install
+          printf '#!/bin/bash\necho "[MOCK] nvim $*"\n' > "$HOME/.local/bin/nvim"
+          chmod +x "$HOME/.local/bin/nvim"
+
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Patch install.sh to clone from local checkout
+        run: |
+          sed -i 's|git clone -b server https://github.com/AssachanDev/nvim.git.*|mkdir -p "$HOME/.config" \&\& cp -r "$GITHUB_WORKSPACE" "$HOME/.config/nvim"|' install.sh
+
+      - name: Run install script
+        run: bash install.sh
+
+      - name: Verify config structure
+        run: |
+          errors=0
+
+          check() {
+            if [ -e "$1" ]; then
+              echo "  ✓ $1"
+            else
+              echo "  ✗ MISSING: $1"
+              errors=$((errors + 1))
+            fi
+          }
+
+          echo ""
+          echo "── Core ──────────────────────────────────────"
+          check "$HOME/.config/nvim/init.lua"
+          check "$HOME/.config/nvim/lua/config/options.lua"
+          check "$HOME/.config/nvim/lua/config/keymaps.lua"
+          check "$HOME/.config/nvim/lua/config/autocmds.lua"
+
+          echo ""
+          echo "── Plugins ───────────────────────────────────"
+          check "$HOME/.config/nvim/lua/plugins/lsp.lua"
+          check "$HOME/.config/nvim/lua/plugins/cmp.lua"
+          check "$HOME/.config/nvim/lua/plugins/telescope.lua"
+          check "$HOME/.config/nvim/lua/plugins/treesitter.lua"
+          check "$HOME/.config/nvim/lua/plugins/conform.lua"
+          check "$HOME/.config/nvim/lua/plugins/ui.lua"
+          check "$HOME/.config/nvim/lua/plugins/neo-tree.lua"
+          check "$HOME/.config/nvim/lua/plugins/gitsigns.lua"
+
+          echo ""
+          if [ "$errors" -gt 0 ]; then
+            echo "FAILED — $errors file(s) missing"
+            exit 1
+          fi
+
+          echo "All files verified successfully."
