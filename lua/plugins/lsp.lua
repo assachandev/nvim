@@ -13,7 +13,7 @@ return {
                 "pyright",   -- Python
                 "lua_ls",    -- Lua
                 "bashls",    -- Bash
-                "clangd",    -- C / C++
+                -- clangd installed system-wide via pacman
             },
             automatic_installation = true,
         },
