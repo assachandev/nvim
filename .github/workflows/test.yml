@@ -1,0 +1,97 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ─────────────────────────────────────────────────────────────
+  #  Lint — shellcheck install.sh
+  # ─────────────────────────────────────────────────────────────
+  lint:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Run shellcheck
+        run: shellcheck install.sh
+
+  # ─────────────────────────────────────────────────────────────
+  #  Dry Run — verify install script runs and config is cloned
+  # ─────────────────────────────────────────────────────────────
+  dry-run:
+    name: Dry Run (Arch Linux)
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install base packages
+        run: pacman -Sy --noconfirm bash coreutils git
+
+      - name: Create mock commands
+        run: |
+          # Mock sudo
+          printf '#!/bin/bash\n"$@"\n' > /usr/local/bin/sudo
+          chmod +x /usr/local/bin/sudo
+
+          # Mock pacman — skip all installs
+          printf '#!/bin/bash\necho "[MOCK] pacman $*"\n' > /usr/local/bin/pacman
+          chmod +x /usr/local/bin/pacman
+
+          # Create /etc/arch-release so check passes
+          touch /etc/arch-release
+
+      - name: Patch install.sh to clone from local checkout
+        run: |
+          # Replace the git clone with a local copy so we don't need network access
+          sed -i 's|git clone https://github.com/AssachanDev/nvim.git.*|cp -r "$GITHUB_WORKSPACE" "$HOME/.config/nvim"|' install.sh
+
+      - name: Run install script
+        run: bash install.sh
+
+      - name: Verify config structure
+        run: |
+          errors=0
+
+          check() {
+            if [ -e "$1" ]; then
+              echo "  ✓ $1"
+            else
+              echo "  ✗ MISSING: $1"
+              errors=$((errors + 1))
+            fi
+          }
+
+          echo ""
+          echo "── Core ──────────────────────────────────────"
+          check "$HOME/.config/nvim/init.lua"
+          check "$HOME/.config/nvim/lua/config/options.lua"
+          check "$HOME/.config/nvim/lua/config/keymaps.lua"
+          check "$HOME/.config/nvim/lua/config/autocmds.lua"
+
+          echo ""
+          echo "── Plugins ───────────────────────────────────"
+          check "$HOME/.config/nvim/lua/plugins/lsp.lua"
+          check "$HOME/.config/nvim/lua/plugins/cmp.lua"
+          check "$HOME/.config/nvim/lua/plugins/telescope.lua"
+          check "$HOME/.config/nvim/lua/plugins/treesitter.lua"
+          check "$HOME/.config/nvim/lua/plugins/conform.lua"
+          check "$HOME/.config/nvim/lua/plugins/ui.lua"
+          check "$HOME/.config/nvim/lua/plugins/neo-tree.lua"
+          check "$HOME/.config/nvim/lua/plugins/gitsigns.lua"
+
+          echo ""
+          if [ "$errors" -gt 0 ]; then
+            echo "FAILED — $errors file(s) missing"
+            exit 1
+          fi
+
+          echo "All files verified successfully."

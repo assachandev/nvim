@@ -134,20 +134,40 @@ Catppuccin Mocha · lazy-loaded · LSP-first · full feature set for local use.
 
 ## 🚀 Installation
 
-**Requirements:** Neovim 0.10+, Git, a [Nerd Font](https://www.nerdfonts.com/), `make`, tmux + [TPM](https://github.com/tmux-plugins/tpm) _(for tmux integration)_
+### Option 1 — Arch Linux (recommended)
 
 ```bash
-# Backup existing config
-mv ~/.config/nvim ~/.config/nvim.bak
+bash <(curl -s https://raw.githubusercontent.com/AssachanDev/nvim/main/install.sh)
+```
+
+Installs all system dependencies, clones the config, then launch `nvim` to let lazy.nvim do the rest.
+
+### Option 2 — Manual
+
+**System requirements:**
+
+| Package | Why |
+|---------|-----|
+| `neovim 0.10+` | Core requirement |
+| `git`, `base-devel`, `make` | Plugin building (telescope-fzf-native) |
+| `nodejs` + `npm` | Required for `pyright` and `bashls` LSP servers |
+| `python` | Required for `pyright` to function |
+| `clang` | `clangd` LSP + `clang-format` formatter |
+| `fzf` | Telescope native fuzzy finder |
+| Nerd Font | Icons — e.g. `ttf-jetbrains-mono-nerd` |
+
+```bash
+# Arch Linux
+sudo pacman -S neovim git base-devel make nodejs npm python clang fzf ttf-jetbrains-mono-nerd
 
 # Clone
 git clone https://github.com/AssachanDev/nvim ~/.config/nvim
 
-# Launch — lazy.nvim installs everything on first start
+# Launch — lazy.nvim + Mason install everything on first start
 nvim
 ```
 
-Mason will auto-install all LSP servers and formatters on first launch.
+> Mason will auto-install all LSP servers and formatters on first launch.
 
 ---
 
