@@ -1,0 +1,63 @@
+return {
+    "saghen/blink.cmp",
+    dependencies = {
+        "L3MON4D3/LuaSnip",
+        "rafamadriz/friendly-snippets",
+    },
+    version = "*",
+    opts = {
+        snippets = { preset = "luasnip" },
+        sources = {
+            default = { "lsp", "path", "snippets", "buffer" },
+        },
+        keymap = {
+            preset = "none",
+            ["<Tab>"]     = { "select_next", "snippet_forward", "fallback" },
+            ["<S-Tab>"]   = { "select_prev", "snippet_backward", "fallback" },
+            ["<CR>"]      = { "accept", "fallback" },
+            ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+            ["<C-e>"]     = { "hide", "fallback" },
+            ["<C-d>"]     = { "scroll_documentation_down", "fallback" },
+            ["<C-u>"]     = { "scroll_documentation_up", "fallback" },
+        },
+        appearance = {
+            kind_icons = {
+                Text          = "󰉿",
+                Method        = "󰆧",
+                Function      = "󰊕",
+                Constructor   = "",
+                Field         = "󰜢",
+                Variable      = "󰀫",
+                Class         = "󰠱",
+                Interface     = "",
+                Module        = "",
+                Property      = "󰜢",
+                Unit          = "󰑭",
+                Value         = "󰎠",
+                Enum          = "",
+                Keyword       = "󰌋",
+                Snippet       = "",
+                Color         = "󰏘",
+                File          = "󰈙",
+                Reference     = "󰈇",
+                Folder        = "󰉋",
+                EnumMember    = "",
+                Constant      = "󰏿",
+                Struct        = "󰙅",
+                Event         = "",
+                Operator      = "󰆕",
+                TypeParameter = "",
+            },
+        },
+        completion = {
+            documentation = {
+                auto_show = true,
+                auto_show_delay_ms = 200,
+                window = { border = "rounded" },
+            },
+            menu = {
+                border = "rounded",
+            },
+        },
+    },
+}

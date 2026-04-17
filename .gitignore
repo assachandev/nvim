@@ -1,0 +1,9 @@
+# Lazy.nvim lock file (optional: commit this if you want reproducible plugin versions)
+lazy-lock.json
+
+# Optional plugins (local only)
+lua/optional-plugins/
+
+# Claude Code local settings
+.claude/
+
