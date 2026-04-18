@@ -3,6 +3,7 @@ lazy-lock.json
 
 # Optional plugins (local only)
 lua/optional-plugins/
+lua/plugins/molten.lua
 
 # Claude Code local settings
 guides/
