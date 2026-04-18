@@ -1,6 +1,6 @@
 **A minimal, fast, and opinionated Neovim setup built from scratch in Lua.**
 
-[![Neovim](https://img.shields.io/badge/Neovim-0.11%2B-57A143?style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io)
+[![Neovim](https://img.shields.io/badge/Neovim-0.12%2B-57A143?style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io)
 [![Lua](https://img.shields.io/badge/Lua-2C2D72?style=for-the-badge&logo=lua&logoColor=white)](https://lua.org)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Branch](https://img.shields.io/badge/branch-main-green?style=for-the-badge&logo=git&logoColor=white)](../../tree/main)
@@ -16,13 +16,13 @@
 | Category | Plugin | Description |
 |----------|--------|-------------|
 | **LSP** | [lsp.lua](lua/plugins/lsp.lua) | Mason · mason-lspconfig · nvim-lspconfig |
-| **Completion** | [cmp.lua](lua/plugins/cmp.lua) | blink.cmp · LuaSnip · friendly-snippets |
+| **Completion** | [blink.lua](lua/plugins/blink.lua) | blink.cmp · LuaSnip · friendly-snippets |
 | **Syntax** | [treesitter.lua](lua/plugins/treesitter.lua) | Highlighting · indentation · textobjects |
 | **Search** | [telescope.lua](lua/plugins/telescope.lua) | FZF-native fuzzy finder |
 | **Format** | [conform.lua](lua/plugins/conform.lua) | Format on save — black · stylua · shfmt · clang-format |
 | **Git** | [gitsigns.lua](lua/plugins/gitsigns.lua) | Hunks · inline blame · stage/reset |
 | **Files** | [yazi.lua](lua/plugins/yazi.lua) | Yazi TUI file manager |
-| **UI** | [ui.lua](lua/plugins/ui.lua) | Tokyo Night · Noice · Lualine · Fidget · mini.indentscope |
+| **UI** | [ui.lua](lua/plugins/ui.lua) | Tokyo Night · Noice · Lualine · Fidget · mini.indentscope · mini.animate |
 | **Editor** | [pairs.lua](lua/plugins/pairs.lua) | mini.pairs · nvim-surround · Flash |
 | **Markdown** | [render-markdown.lua](lua/plugins/render-markdown.lua) | Rendered headings · code blocks · checkboxes |
 | **Nav** | [tmux-navigator.lua](lua/plugins/tmux-navigator.lua) | Seamless Neovim ↔ tmux pane navigation |
@@ -190,7 +190,7 @@ nvim
 
 | Package | Purpose |
 |---------|---------|
-| `neovim 0.11+` | Core requirement |
+| `neovim 0.12+` | Core requirement |
 | `git` · `base-devel` · `make` | Plugin building (fzf-native) |
 | `nodejs` · `npm` | `pyright` and `bashls` LSP servers |
 | `python` | `pyright` runtime |
@@ -222,7 +222,7 @@ nvim
     │   └── autocmds.lua      # Autocommands
     └── plugins/              # One file per plugin, auto-loaded by lazy.nvim
         ├── lsp.lua
-        ├── cmp.lua
+        ├── blink.lua
         ├── ui.lua
         └── ...
 ```
