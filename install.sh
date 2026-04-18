@@ -51,14 +51,18 @@ if [[ "$OS" == "arch" ]]; then
 elif [[ "$OS" == "ubuntu" ]]; then
     sudo apt-get update -q
 
-    # Neovim 0.11+ — apt version is usually too old, install via tarball
-    if ! command -v nvim &>/dev/null || [[ "$(nvim --version | head -1 | grep -oP '\d+\.\d+')" < "0.11" ]]; then
-        info "Installing Neovim 0.11+ from GitHub releases..."
-        NVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz"
-        curl -sL "$NVIM_URL" -o /tmp/nvim.tar.gz
-        sudo tar -C /usr/local -xzf /tmp/nvim.tar.gz --strip-components=1
-        rm /tmp/nvim.tar.gz
+    # Remove apt neovim if installed (usually too old)
+    if dpkg -l neovim &>/dev/null 2>&1; then
+        info "Removing outdated apt neovim..."
+        sudo apt-get remove -y neovim
     fi
+
+    # Neovim 0.11+ — install via tarball
+    info "Installing Neovim 0.11+ from GitHub releases..."
+    NVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz"
+    curl -sL "$NVIM_URL" -o /tmp/nvim.tar.gz
+    sudo tar -C /usr/local -xzf /tmp/nvim.tar.gz --strip-components=1
+    rm /tmp/nvim.tar.gz
 
     sudo apt-get install -y \
         git \
