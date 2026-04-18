@@ -1,5 +1,5 @@
 #!/bin/bash
-# Neovim config installer for Arch Linux
+# Neovim config installer — Arch Linux & Ubuntu
 
 set -e
 
@@ -15,31 +15,77 @@ warn()    { echo -e "${YELLOW}[WARN]${NC} $1"; }
 error()   { echo -e "${RED}[ERROR]${NC} $1"; exit 1; }
 
 # ─────────────────────────────────────────────────────────────
-#  Check Arch
+#  Detect OS
 # ─────────────────────────────────────────────────────────────
-if [[ ! -f /etc/arch-release ]]; then
-    error "This script is for Arch Linux only."
+if [[ -f /etc/arch-release ]]; then
+    OS="arch"
+elif [[ -f /etc/lsb-release ]] && grep -q "Ubuntu" /etc/lsb-release; then
+    OS="ubuntu"
+else
+    error "Unsupported OS. This script supports Arch Linux and Ubuntu only."
 fi
+
+info "Detected OS: $OS"
 
 # ─────────────────────────────────────────────────────────────
 #  Install system dependencies
 # ─────────────────────────────────────────────────────────────
 info "Installing system dependencies..."
-sudo pacman -S --needed --noconfirm \
-    neovim \
-    git \
-    base-devel \
-    make \
-    nodejs \
-    npm \
-    python \
-    python-pip \
-    clang \
-    fzf \
-    yazi \
-    ttf-jetbrains-mono-nerd \
-    jre-openjdk-headless \
 
+if [[ "$OS" == "arch" ]]; then
+    sudo pacman -S --needed --noconfirm \
+        neovim \
+        git \
+        base-devel \
+        make \
+        nodejs \
+        npm \
+        python \
+        python-pip \
+        clang \
+        fzf \
+        yazi \
+        ttf-jetbrains-mono-nerd \
+        jre-openjdk-headless
+
+elif [[ "$OS" == "ubuntu" ]]; then
+    sudo apt-get update -q
+
+    # Neovim 0.11+ — apt version is usually too old, install via tarball
+    if ! command -v nvim &>/dev/null || [[ "$(nvim --version | head -1 | grep -oP '\d+\.\d+')" < "0.11" ]]; then
+        info "Installing Neovim 0.11+ from GitHub releases..."
+        NVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz"
+        curl -sL "$NVIM_URL" -o /tmp/nvim.tar.gz
+        sudo tar -C /usr/local -xzf /tmp/nvim.tar.gz --strip-components=1
+        rm /tmp/nvim.tar.gz
+    fi
+
+    sudo apt-get install -y \
+        git \
+        build-essential \
+        make \
+        nodejs \
+        npm \
+        python3 \
+        python3-pip \
+        clang \
+        clang-format \
+        fzf \
+        default-jre-headless
+
+    # yazi — not in apt, install via cargo or binary
+    if ! command -v yazi &>/dev/null; then
+        info "Installing yazi..."
+        YAZI_URL="https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-gnu.zip"
+        curl -sL "$YAZI_URL" -o /tmp/yazi.zip
+        unzip -q /tmp/yazi.zip -d /tmp/yazi
+        sudo mv /tmp/yazi/yazi-x86_64-unknown-linux-gnu/yazi /usr/local/bin/
+        rm -rf /tmp/yazi.zip /tmp/yazi
+    fi
+
+    warn "On Ubuntu, install a Nerd Font manually and set it in your terminal."
+    warn "Download: https://www.nerdfonts.com/font-downloads (JetBrainsMono recommended)"
+fi
 
 success "System dependencies installed."
 
