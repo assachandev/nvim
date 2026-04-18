@@ -5,5 +5,4 @@ lazy-lock.json
 lua/optional-plugins/
 
 # Claude Code local settings
-.claude/
-
+guides/
