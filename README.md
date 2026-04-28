@@ -23,7 +23,7 @@
 | **Git** | [gitsigns.lua](lua/plugins/gitsigns.lua) | Hunks · inline blame · stage/reset |
 | **Files** | [yazi.lua](lua/plugins/yazi.lua) | Yazi TUI file manager |
 | **UI** | [ui.lua](lua/plugins/ui.lua) | Tokyo Night · Noice · Lualine · Fidget · mini.indentscope · mini.animate |
-| **Editor** | [pairs.lua](lua/plugins/pairs.lua) | mini.pairs · nvim-surround · Flash |
+| **Editor** | [surround.lua](lua/plugins/surround.lua) | nvim-surround · Flash |
 | **Markdown** | [render-markdown.lua](lua/plugins/render-markdown.lua) | Rendered headings · code blocks · checkboxes |
 | **Nav** | [tmux-navigator.lua](lua/plugins/tmux-navigator.lua) | Seamless Neovim ↔ tmux pane navigation |
 
