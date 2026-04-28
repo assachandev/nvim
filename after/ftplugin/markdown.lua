@@ -1,6 +1,3 @@
--- Force treesitter highlighting so heading highlights work
-vim.treesitter.start()
-
 local headings = {
     { level = 1, fg = "#ff757f" },
     { level = 2, fg = "#4fd6be" },
