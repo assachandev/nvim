@@ -29,7 +29,7 @@ return {
                 },
             },
             preview = {
-                treesitter = false,
+                treesitter = true,
             },
         },
         extensions = {

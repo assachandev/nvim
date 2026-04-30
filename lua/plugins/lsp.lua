@@ -15,7 +15,7 @@ return {
                 "bashls",         -- Bash
                 "rust_analyzer",  -- Rust
                 "ltex",           -- Grammar check
-                -- clangd installed system-wide via pacman
+                "clangd",         -- C/C++ (system-wide via pacman, mason mirrors it)
             },
             automatic_installation = true,
         },
@@ -119,6 +119,27 @@ return {
             -- Pass blink.cmp capabilities to all servers
             vim.lsp.config("*", {
                 capabilities = require("blink.cmp").get_lsp_capabilities(),
+            })
+
+            -- Python (Pyright)
+            vim.lsp.config("pyright", {
+                settings = {
+                    python = {
+                        analysis = {
+                            typeCheckingMode = "standard",
+                        },
+                    },
+                },
+            })
+
+            -- Rust
+            vim.lsp.config("rust_analyzer", {
+                settings = {
+                    ["rust-analyzer"] = {
+                        inlayHints = { enable = true },
+                        checkOnSave = { command = "clippy" },
+                    },
+                },
             })
 
             -- Lua (aware of vim globals)
